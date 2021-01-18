@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class OnStopTrigger : MonoBehaviour
@@ -14,11 +12,6 @@ public class OnStopTrigger : MonoBehaviour
         swipe = GetComponent<Swipe>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Buddy")) NewBuddy = null;

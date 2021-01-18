@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Respawn : MonoBehaviour
@@ -13,19 +12,11 @@ public class Respawn : MonoBehaviour
     {
         StartCoroutine(Spawn());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public IEnumerator Spawn()
     {
         while (!BigAmountOfBuddys)
         {
             float random = Random.Range(minTimeSpawn, maxTimeSpawn);
-
-
             yield return new WaitForSeconds(random);
             int RandomTransform = Random.Range(0, spawners.Length);
             var newObj = Instantiate(Buddy, spawners[RandomTransform].position, Quaternion.identity);
