@@ -7,15 +7,16 @@ public class OnStopTrigger : MonoBehaviour
     [SerializeField] private Slider HowGood, HowBad;
     [SerializeField] private Swipe swipe;
     [SerializeField] private Transform GoodHealth, BadHealth;
+    [SerializeField] private int wrongAnswerValue;
     void Start()
     {
         swipe = GetComponent<Swipe>();
     }
 
-    private void OnTriggerExit(Collider other)
+    /*private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Buddy")) NewBuddy = null;
-    }
+    }*/
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Buddy"))
@@ -32,8 +33,7 @@ public class OnStopTrigger : MonoBehaviour
         {
             if (IsHealthy)
             {
-                NewBuddy.StopPoint = GoodHealth;
-                NewBuddy.ContinueWalking(GoodHealth);
+
                 if (NewBuddy.IsGood > NewBuddy.IsBad)
                 {
                     print("You are Right");
@@ -41,12 +41,16 @@ public class OnStopTrigger : MonoBehaviour
                 else
                 {
                     print("You Are Wrong");
+                    wrongAnswerValue++;
+                    return;
                 }
+                NewBuddy.StopPoint = GoodHealth;
+                NewBuddy.ContinueWalking(GoodHealth);
+                NewBuddy = null;
             }
             else
             {
-                NewBuddy.StopPoint = BadHealth;
-                NewBuddy.ContinueWalking(BadHealth);
+
                 if (NewBuddy.IsGood < NewBuddy.IsBad)
                 {
                     print("You are Right");
@@ -54,7 +58,12 @@ public class OnStopTrigger : MonoBehaviour
                 else
                 {
                     print("You Are Wrong");
+                    wrongAnswerValue++;
+                    return;
                 }
+                NewBuddy.StopPoint = BadHealth;
+                NewBuddy.ContinueWalking(BadHealth);
+                NewBuddy = null;
             }
         }
     }

@@ -9,9 +9,10 @@ public class BuddyControl : MonoBehaviour
     public Animator animator;
     public Transform StopPoint;
     public bool IsGoing, Event;
-    private float minTimeSpawn = 15, maxTimeSpawn = 30;
+    private float minTimeSpawn = 15, maxTimeSpawn = 25;
     [SerializeField] private int eventCounter;
     public string[] Events;
+    public int type;
 
     public float IsGood, IsBad;
     void Start()
@@ -22,10 +23,15 @@ public class BuddyControl : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Buddy") && IsGoing) Stop(true);
-        if (other.CompareTag("Stop")) Stop(false);
+        //if (other.CompareTag("Buddy") && IsGoing) Stop(true);
+        if (other.CompareTag("Stop")) 
+        {
+
+            Stop(false);
+            StopPoint = null;
+        }
     }
-    void Stop(bool Inqueue)
+    public void Stop(bool Inqueue)
     {
         IsGoing = false;
         animator.SetBool("Walking", IsGoing);
@@ -44,22 +50,25 @@ public class BuddyControl : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Buddy") && !other.CompareTag("Stop"))
+        if (other.CompareTag("Buddy") && StopPoint != null)
         {
-            Agent.isStopped = false;
+
             ContinueWalking(StopPoint);
         }
     }
+
     public void ContinueWalking(Transform Pointer)
     {
         if (Pointer != null)
         {
+            Agent.isStopped = false;
             Agent.SetDestination(Pointer.position);
             IsGoing = true;
             animator.SetBool("Walking", IsGoing);
 
         }
         if (Event) StopCoroutine(Sneeze());
+        Event = false;
     }
     IEnumerator Sneeze()
     {
