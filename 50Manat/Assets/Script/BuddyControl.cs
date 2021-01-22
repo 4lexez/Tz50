@@ -17,13 +17,12 @@ public class BuddyControl : MonoBehaviour
     public float IsGood, IsBad;
     void Start()
     {
-        RandomHealthValue();
+        //RandomHealthValue();
         animator = transform.GetChild(0).GetComponent<Animator>();
         ContinueWalking(StopPoint);
     }
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.CompareTag("Buddy") && IsGoing) Stop(true);
         if (other.CompareTag("Stop")) 
         {
 
@@ -38,7 +37,7 @@ public class BuddyControl : MonoBehaviour
         Agent.isStopped = Inqueue;
         StartCoroutine(Sneeze());
     }
-    void RandomHealthValue()
+    /*void RandomHealthValue()
     {
         IsGood = Random.Range(0, 7);
         IsBad = Random.Range(0, 7);
@@ -47,7 +46,7 @@ public class BuddyControl : MonoBehaviour
             RandomHealthValue();
             return;
         }
-    }
+    }*/
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Buddy") && StopPoint != null)

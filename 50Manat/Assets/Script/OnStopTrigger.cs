@@ -8,15 +8,11 @@ public class OnStopTrigger : MonoBehaviour
     [SerializeField] private Swipe swipe;
     [SerializeField] private Transform GoodHealth, BadHealth;
     [SerializeField] private int wrongAnswerValue;
+    [SerializeField] private Canvas CameraButton;
     void Start()
     {
         swipe = GetComponent<Swipe>();
     }
-
-    /*private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Buddy")) NewBuddy = null;
-    }*/
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Buddy"))
@@ -31,6 +27,7 @@ public class OnStopTrigger : MonoBehaviour
     {
         if(NewBuddy != null)
         {
+
             if (IsHealthy)
             {
 
@@ -61,6 +58,8 @@ public class OnStopTrigger : MonoBehaviour
                     wrongAnswerValue++;
                     return;
                 }
+                if (!CameraButton.enabled)
+                    CameraButton.enabled = true;
                 NewBuddy.StopPoint = BadHealth;
                 NewBuddy.ContinueWalking(BadHealth);
                 NewBuddy = null;
