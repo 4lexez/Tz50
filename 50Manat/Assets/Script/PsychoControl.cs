@@ -5,15 +5,17 @@ using UnityEngine;
 public class PsychoControl : MonoBehaviour
 {
     public Animator animator;
+    [SerializeField] private bool IsUseAnimator;
     public float IsGood, IsBad;
     private bool sit;
-    [SerializeField] private Transform patientSeat;
+    public Transform patientSeat;
     public CameraChange CamChange;
     void Start()
     {
         CamChange = Camera.main.GetComponent<CameraChange>();
-        animator = transform.GetChild(0).GetComponent<Animator>();
-        patientSeat = GameObject.Find("PatientSitplace").transform;
+        if(IsUseAnimator)
+            animator = transform.GetChild(0).GetComponent<Animator>();
+        //patientSeat = GameObject.Find("PatientSitplace").transform;
     }
     private void OnMouseDown()
     {
@@ -21,10 +23,11 @@ public class PsychoControl : MonoBehaviour
     }
     IEnumerator WaitForSit()
     {
-        CamChange.OnCameraChange(false);
+        CamChange.OnCameraChange(2);
         yield return new WaitForSeconds(1f);
         sit = true;
-        animator.SetBool("Sit", sit);
+        if(IsUseAnimator)
+            animator.SetBool("Sit", sit);
         //yield return new WaitForSeconds(0.2f);
         transform.position = patientSeat.position;
         transform.rotation = patientSeat.rotation;

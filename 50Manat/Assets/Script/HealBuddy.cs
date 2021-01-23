@@ -7,6 +7,7 @@ public class HealBuddy : MonoBehaviour
 {
     [SerializeField] private BuddyControl NewBuddy;
     [SerializeField] private PsychoControl[] psychoBuddy;
+    [SerializeField] private GameObject[] psychoBuddyObject;
     [SerializeField] private Slider HowGood, HowBad;
     [SerializeField] private Transform[] BuddyCell;
     [SerializeField] private Transform patientSeat;
@@ -39,10 +40,12 @@ public class HealBuddy : MonoBehaviour
                 if(BuddyCell[i] != null)
                 {
                     cellValue++;
-                    var newPsycho = Instantiate(psychoBuddy[NewBuddy.type], BuddyCell[i].position, BuddyCell[i].rotation);
+                    //var newPsycho = Instantiate(psychoBuddy[NewBuddy.type], BuddyCell[i].position, BuddyCell[i].rotation);
+                    var newPsycho = Instantiate(psychoBuddyObject[NewBuddy.type], BuddyCell[i].position, BuddyCell[i].rotation).GetComponent<PsychoControl>();
                     newPsycho.IsGood = NewBuddy.IsGood;
                     newPsycho.IsBad = NewBuddy.IsBad;
-                    newPsycho.CamChange = CamChange; 
+                    newPsycho.CamChange = CamChange;
+                    newPsycho.patientSeat = patientSeat;
                     Destroy(NewBuddy.gameObject);
                     break;
                 }

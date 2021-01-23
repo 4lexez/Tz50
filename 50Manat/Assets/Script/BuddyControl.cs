@@ -7,10 +7,13 @@ public class BuddyControl : MonoBehaviour
 {
     public NavMeshAgent Agent;
     public Animator animator;
+
     public Transform StopPoint;
     public bool IsGoing, Event;
     private float minTimeSpawn = 15, maxTimeSpawn = 25;
     [SerializeField] private int eventCounter;
+    [SerializeField]
+    private bool IsUseAnimator;
     public string[] Events;
     public int type;
 
@@ -18,7 +21,8 @@ public class BuddyControl : MonoBehaviour
     void Start()
     {
         //RandomHealthValue();
-        animator = transform.GetChild(0).GetComponent<Animator>();
+        if(IsUseAnimator)
+            animator = transform.GetChild(0).GetComponent<Animator>();
         ContinueWalking(StopPoint);
     }
     private void OnTriggerEnter(Collider other)
@@ -33,7 +37,8 @@ public class BuddyControl : MonoBehaviour
     public void Stop(bool Inqueue)
     {
         IsGoing = false;
-        animator.SetBool("Walking", IsGoing);
+        if(IsUseAnimator)
+            animator?.SetBool("Walking", IsGoing);
         Agent.isStopped = Inqueue;
         StartCoroutine(Sneeze());
     }
@@ -63,7 +68,8 @@ public class BuddyControl : MonoBehaviour
             Agent.isStopped = false;
             Agent.SetDestination(Pointer.position);
             IsGoing = true;
-            animator.SetBool("Walking", IsGoing);
+            if(IsUseAnimator)
+                animator?.SetBool("Walking", IsGoing);
 
         }
         if (Event) StopCoroutine(Sneeze());
@@ -78,7 +84,8 @@ public class BuddyControl : MonoBehaviour
             eventCounter = Random.Range(0, Events.Length);
             float timeToSneeze = Random.Range(minTimeSpawn, maxTimeSpawn);
             yield return new WaitForSeconds(timeToSneeze);
-            animator.SetTrigger($"{Events[eventCounter]}");
+            if(IsUseAnimator)
+                animator?.SetTrigger($"{Events[eventCounter]}");
         }
     }
 }

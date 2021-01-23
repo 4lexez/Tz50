@@ -4,7 +4,9 @@ using UnityEngine.UI;
 public class OnStopTrigger : MonoBehaviour
 {
     [SerializeField] private BuddyControl NewBuddy;
+    [SerializeField] private PsychoControl PsychoBuddy;
     [SerializeField] private Slider HowGood, HowBad;
+    [SerializeField] private Slider HowGoodPsycho;
     [SerializeField] private Swipe swipe;
     [SerializeField] private Transform GoodHealth, BadHealth;
     [SerializeField] private int wrongAnswerValue;
@@ -21,6 +23,11 @@ public class OnStopTrigger : MonoBehaviour
             NewBuddy = other.GetComponent<BuddyControl>();
             HowGood.value = NewBuddy.IsGood;
             HowBad.value = NewBuddy.IsBad;
+        }
+        if (other.CompareTag("Psycho"))
+        {
+            PsychoBuddy = other.GetComponent<PsychoControl>();
+            HowGoodPsycho.value = PsychoBuddy.IsGood;
         }
     }
     public void MakeTurn(bool IsHealthy)
