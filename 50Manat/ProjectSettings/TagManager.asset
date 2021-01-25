@@ -8,6 +8,7 @@ TagManager:
   - Stop
   - EndSpawn
   - Psycho
+  - Tile
   layers:
   - Default
   - TransparentFX
